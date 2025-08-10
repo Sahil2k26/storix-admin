@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const port = 3001; // You could make this dynamic with a port allocator
     //const containerName = `store-preview-${storeName.slice(0, 6)}`;
-    const cmd = `docker run -d -e NEXT_PUBLIC_API_URL=${StoreApiUrl} -e StoreName="${storeName}" -p ${port}:3001 dev862/ecommerce-storefront-template:V1`;
+    const cmd = `docker run -d -e NEXT_PUBLIC_API_URL=${StoreApiUrl} -e StoreName="${storeName}" -p ${port}:3001 dev862/ecommerce-storefront-template:latest`;
 
     try {
         console.log("Executing:", cmd);

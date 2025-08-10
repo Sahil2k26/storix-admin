@@ -56,6 +56,8 @@ model Category {
   billboardId String
   Billboard   Billboard @relation(fields: [billboardId], references: [id])
   products    Product[]
+
+  @@index([storeId, billboardId])
 }
 
 model Size {
@@ -67,6 +69,8 @@ model Size {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
+
+  @@index([storeId])
 }
 
 model Color {
@@ -78,6 +82,8 @@ model Color {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
+
+  @@index([storeId])
 }
 
 model Product {
@@ -99,6 +105,8 @@ model Product {
   updatedAt  DateTime    @updatedAt
   orderItems OrderItem[]
   quantity   Int         @default(1)
+
+  @@index([storeId, categoryId, sizeId, colorId])
 }
 
 model Image {
@@ -129,6 +137,8 @@ model Order {
   total          Int         @default(0) // Final total after tax and discounts
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+
+  @@index([storeId, orderStatus, orderType])
 }
 
 model OrderItem {
