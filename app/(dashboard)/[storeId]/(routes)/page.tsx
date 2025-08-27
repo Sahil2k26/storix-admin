@@ -37,20 +37,20 @@ export default async function DashboardPage({ params }: { params: Promise<{ stor
     // };
 
 
-    const topProductstemp = await getTopProduct();
+    const topProductstemp = await getTopProduct(storeId);
     const topProducts: ProductData[] = await topProductstemp.json();
-    const topCategoriestemp = await getTopCategories();
+    const topCategoriestemp = await getTopCategories(storeId);
     const topCategories: CategoryData[] = await topCategoriestemp.json();
-    const totalProducedOrdertemp = await getTotalProductOrdered();
+    const totalProducedOrdertemp = await getTotalProductOrdered(storeId);
     const totalProducedOrdertemp2 = await totalProducedOrdertemp.json();
     const totalProducedOrder = totalProducedOrdertemp2.totalOrderedProducts;
 
-    const topProductsRevenue = await getProductRevenueData();
+    const topProductsRevenue = await getProductRevenueData(storeId);
     // const topProductsRevenue: ProductRevenueData[] = await topProductsRevenuetemp.json();
-    console.log(topProductsRevenue, "&&&&&&&");
-    const topCategoriesRevenue = await getCategoryRevenueData();
+    // console.log(topProductsRevenue, "&&&&&&&");
+    const topCategoriesRevenue = await getCategoryRevenueData(storeId);
     // const topCategoriesRevenue: CategoryRevenueData[] = await topCategoriesRevenuetemp.json();
-    console.log(topCategoriesRevenue, "-----");
+    // console.log(topCategoriesRevenue, "-----");
 
 
 

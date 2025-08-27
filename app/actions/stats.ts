@@ -94,7 +94,7 @@ export async function getGraphRevenue(storeId: string) {
 }
 
 
-export async function getTopProduct() {
+export async function getTopProduct(storeId: string) {
   try {
     const topProducts = await prismadb.orderItem.groupBy({
       by: ['productId'],
@@ -107,6 +107,11 @@ export async function getTopProduct() {
         },
       },
       take: 5,
+      where: {
+        product: {
+          storeId: storeId,
+        },
+      },
     });
 
     const products = await Promise.all(
@@ -129,12 +134,18 @@ export async function getTopProduct() {
   }
 }
 
-export async function getTotalProductOrdered() {
+export async function getTotalProductOrdered(storeId: string) {
   try {
     const total = await prismadb.orderItem.aggregate({
       _sum: {
         quantity: true,
       },
+      where: {
+        product: {
+          storeId: storeId,
+        },
+      },
+
     });
 
     return NextResponse.json({
@@ -146,13 +157,24 @@ export async function getTotalProductOrdered() {
   }
 }
 
-export async function getTopCategories() {
+export async function getTopCategories(storeId: string) {
   try {
     // Group orderItems by productId to get quantity per product
     const grouped = await prismadb.orderItem.groupBy({
       by: ['productId'],
       _sum: {
         quantity: true,
+      },
+      orderBy: {
+        _sum: {
+          quantity: 'desc',
+        },
+      },
+      where: {
+        // Assuming you want to filter by some storeId, add it here if needed
+        product: {
+          storeId: storeId,
+        },
       },
     });
 
@@ -197,7 +219,7 @@ export async function getTopCategories() {
   }
 }
 
-export async function getProductRevenueData(): Promise<{ name: string; revenue: number }[]> {
+export async function getProductRevenueData(storeId: string): Promise<{ name: string; revenue: number }[]> {
   // Step 1: Get all OrderItems with their Product's name and price
   const orderItems = await prismadb.orderItem.findMany({
     select: {
@@ -208,6 +230,12 @@ export async function getProductRevenueData(): Promise<{ name: string; revenue: 
           name: true,
           price: true, // We use this from Product
         },
+
+      },
+    },
+    where: {
+      product: {
+        storeId: storeId,
       },
     },
   });
@@ -239,7 +267,7 @@ export async function getProductRevenueData(): Promise<{ name: string; revenue: 
     .slice(0, 5);
 }
 
-export async function getCategoryRevenueData(): Promise<{ name: string; revenue: number }[]> {
+export async function getCategoryRevenueData(storeId: string): Promise<{ name: string; revenue: number }[]> {
   // Step 1: Get all order items with product's price + category
   const orderItems = await prismadb.orderItem.findMany({
     select: {
@@ -255,6 +283,12 @@ export async function getCategoryRevenueData(): Promise<{ name: string; revenue:
             },
           },
         },
+      },
+
+    },
+    where: {
+      product: {
+        storeId: storeId,
       },
     },
   });
