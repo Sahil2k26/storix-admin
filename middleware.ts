@@ -4,12 +4,12 @@ import { ratelimit } from '@/lib/rateLimit'
 const isPublicRoute = createRouteMatcher(['/signin(.*)', '/signup(.*)', '/api(.*)', '/'])
 
 export default clerkMiddleware(async (auth, req) => {
-  const ip = req.headers.get('x-forwarded-for') || 'unknown';
-  // Rate limit the request
-  const { success } = await ratelimit.limit(ip);
-  if (!success) {
-    return new Response('Too many requests', { status: 429, headers: { 'Content-Type': 'application/json' } })
-  }
+  // const ip = req.headers.get('x-forwarded-for') || 'unknown';
+  // // Rate limit the request
+  // const { success } = await ratelimit.limit(ip);
+  // if (!success) {
+  //   return new Response('Too many requests', { status: 429, headers: { 'Content-Type': 'application/json' } })
+  // }
   if (!isPublicRoute(req)) {
     await auth.protect()
   }
