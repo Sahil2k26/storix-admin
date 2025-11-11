@@ -70,7 +70,7 @@ export async function POST(
 
             const order = await tx.order.create({
                 data: {
-                    isPaid: true,
+                    isPaid: orderType === "ONLINE" ? false : true,
                     storeId,
                     customerName,
                     phone,
