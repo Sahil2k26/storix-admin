@@ -26,7 +26,7 @@ export async function NavBar({ storeId, storeName }: { storeId: string, storeNam
                 <StoreSwitcher items={stores} />
                 {/* <MainNav className="mx-6"></MainNav> */}
                 <div className="ml-auto flex items-center space-x-4">
-                    <PreviewButton storeId={storeId} storeName={storeName} />
+                    {/* <PreviewButton storeId={storeId} storeName={storeName} /> */}
                     <ModeToggle />
                     <UserButton afterSwitchSessionUrl="/"
 
