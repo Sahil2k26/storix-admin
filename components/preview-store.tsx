@@ -23,7 +23,7 @@ export default function PreviewButton({ storeId, storeName }: { storeId: string;
     };
 
     return (
-        <div className="flex ">
+        <div className="hidden ">
             {!previewUrl && <Button onClick={handlePreview} disabled={loading}>
                 {loading ? "Loading..." : "Preview Store"}
             </Button>}
